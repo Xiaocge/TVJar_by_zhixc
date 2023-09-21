@@ -3,42 +3,53 @@ package com.github.catvod.demo;
 
 import android.content.Context;
 import com.github.catvod.spider.Voflix;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TestVoflix {
-    public static void main(String[] args) {
-        Voflix voflix = new Voflix();
+    Voflix voflix;
+
+    @Before
+    public void init() throws Exception {
+        voflix = new Voflix();
         voflix.init(new Context(), "https://www.voflix.me/");
-        // 首页测试，输出...
-//        String s = voflix.homeContent(true);
-//        System.out.println(s);
+    }
 
-        // 获取首页推荐视频测试
-//        String s = voflix.homeVideoContent();
-//        System.out.println(s);
+    @Test
+    public void homeContent() throws Exception {
+        System.out.println(voflix.homeContent(true));
+    }
 
+    @Test
+    public void homeVideoContent() {
+//        System.out.println(voflix.homeVideoContent());
+    }
 
-        // 分类页面数据测试
-//        HashMap<String, String> map = new HashMap<>();
-//        map.put("area", "中国香港");
-//        String s = voflix.categoryContent("1", "1", true, map);
-//        System.out.println(s);
+    @Test
+    public void categoryContent() throws Exception {
+        HashMap<String, String> extend = new HashMap<>();
+        extend.put("area", "中国香港");
+        System.out.println(voflix.categoryContent("1", "1", true, extend));
+    }
 
-        // 详情页面数据测试
-//        ArrayList<String> ids = new ArrayList<>();
-//        ids.add("https://www.voflix.me/detail/1911.html");
-//        String s = voflix.detailContent(ids);
-//        System.out.println(s);
+    @Test
+    public void detailContent() throws Exception {
+        ArrayList<String> ids = new ArrayList<>();
+//        ids.add("/detail/156852.html");
+        ids.add("/detail/162486.html");
+        System.out.println(voflix.detailContent(ids));
+    }
 
-        // 搜索测试
-        String s = voflix.searchContent("我", true);
-        System.out.println(s);
+    @Test
+    public void searchContent() throws Exception {
+        System.out.println(voflix.searchContent("我", true));
+    }
 
-        // 播放内容数据测试
-//        String s = voflix.playerContent("", "https://www.voflix.me/play/1911-1-1.html", null);
-//        System.out.println(s);
-
+    @Test
+    public void playerContent() throws Exception {
+        System.out.println(voflix.playerContent("", "/play/139141-2-1.html", null));
     }
 }

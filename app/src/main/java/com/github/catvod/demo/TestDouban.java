@@ -1,13 +1,27 @@
 package com.github.catvod.demo;
 
 import com.github.catvod.spider.Douban;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.HashMap;
 
 public class TestDouban {
-    public static void main(String[] args) {
-        Douban douban = new Douban();
-        HashMap<String , String > extend = new HashMap<>();
+    Douban douban;
+
+    @Before
+    public void init() {
+        douban = new Douban();
+    }
+
+    @Test
+    public void homeContent() throws Exception {
+        System.out.println(douban.homeContent(true));
+    }
+
+    @Test
+    public void categoryContent() throws Exception {
+        HashMap<String, String> extend = new HashMap<>();
 //        extend.put("类型", "喜剧");
 //        extend.put("年代", "2022");
 //        extend.put("sort", "R");

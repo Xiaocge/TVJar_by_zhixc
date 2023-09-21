@@ -14,7 +14,7 @@ public class TestLive2Vod {
     Live2Vod live2Vod;
 
     @Before
-    public void init() {
+    public void init() throws Exception {
         live2Vod = new Live2Vod();
 //        live2Vod.init(new Context(), "Box醒人室$https://agit.ai/fantaiying/fty/raw/branch/master/live.txt#影视范精选$https://agit.ai/fantaiying/fmm/raw/branch/main/tv/m3u/global.m3u&&&https://cdn.jsdelivr.net/gh/zhixc/CatVodTVSpider@main/pic/live.png");
 //        live2Vod.init(new Context(), "Box醒人室$https://agit.ai/fantaiying/fty/raw/branch/master/live.txt#影视范精选$https://agit.ai/fantaiying/fmm/raw/branch/main/tv/m3u/global.m3u&&&");
@@ -22,13 +22,13 @@ public class TestLive2Vod {
     }
 
     @Test
-    public void homeContent() {
+    public void homeContent() throws Exception {
         // 首页测试，输出...
         System.out.println(live2Vod.homeContent(true));
     }
 
     @Test
-    public void categoryContent() {
+    public void categoryContent() throws Exception {
         // 分类页面数据测试
 //        String tid = "{\"pic\": \"https://cdn.jsdelivr.net/gh/zhixc/CatVodTVSpider@main/pic/live.png\", \"url\": \"https://agit.ai/fantaiying/fty/raw/branch/master/live.txt\", \"circuit\": 1}";
 //        String tid = "{\"pic\": \"https://cdn.jsdelivr.net/gh/zhixc/CatVodTVSpider@main/pic/live.png\", \"url\": \"https://agit.ai/xiaohu/tvbox/raw/branch/main/live.txt\", \"circuit\": 1}";
@@ -37,7 +37,7 @@ public class TestLive2Vod {
     }
 
     @Test
-    public void detailContent() {
+    public void detailContent() throws Exception {
         // m3u 格式的参数
         String s = "{\"vod_play_url\":\"CCTV1$https://cntv.sbs/live?auth=230601&id=cctv1\",\"pic\":\"https://live.fanmingming.com/tv/CCTV1.png\"}";
         JSONObject videoInfoObj = new JSONObject(s);
@@ -47,7 +47,7 @@ public class TestLive2Vod {
     }
 
     @Test
-    public void playerContent() {
+    public void playerContent() throws Exception {
         System.out.println(live2Vod.playerContent("", "https://cntv.sbs/live?auth=230601&id=cctv1", new ArrayList<>()));
     }
 }
