@@ -80,7 +80,7 @@ public class Voflix extends Spider {
      *
      * @return 返回字符串
      */
-    @Override
+   /* @Override
     public String homeVideoContent() throws Exception{
         String hotURL = siteURL + "/label/new.html";
         String html = OkHttp.string(hotURL, getHeader());
@@ -104,7 +104,7 @@ public class Voflix extends Spider {
         JSONObject result = new JSONObject()
                 .put("list", videos);
         return result.toString();
-    }
+    }*/
 
     /**
      * 分类内容方法
