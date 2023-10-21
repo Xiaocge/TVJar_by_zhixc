@@ -4,10 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author FongMi
@@ -61,6 +66,10 @@ public class Result {
     }
 
     public static String string(List<Class> classes, LinkedHashMap<String, List<Filter>> filters) {
+        return Result.get().classes(classes).filters(filters).string();
+    }
+
+    public static String string(List<Class> classes, JsonElement filters) {
         return Result.get().classes(classes).filters(filters).string();
     }
 
@@ -206,6 +215,6 @@ public class Result {
 
     @Override
     public String toString() {
-        return new Gson().toJson(this);
+        return new Gson().newBuilder().disableHtmlEscaping().create().toJson(this);
     }
 }
