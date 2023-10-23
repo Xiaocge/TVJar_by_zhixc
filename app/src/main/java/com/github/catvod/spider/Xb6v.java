@@ -78,7 +78,7 @@ public class Xb6v extends Spider {
         for (Element item : items) {
             Element element = item.select("[class=zoom]").get(0);
             String vodId = element.attr("href");
-            String name = element.attr("title");
+            String name = element.attr("title").replaceAll("</?[^>]+>", "");
             String pic = element.select("img").attr("src");
             String remark = item.select("[rel=category tag]").text();
             list.add(new Vod(vodId, name, pic, remark));
