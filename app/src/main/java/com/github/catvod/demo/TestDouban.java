@@ -1,5 +1,6 @@
 package com.github.catvod.demo;
 
+import android.content.Context;
 import com.github.catvod.spider.Douban;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +11,9 @@ public class TestDouban {
     Douban douban;
 
     @Before
-    public void init() {
+    public void init() throws Exception {
         douban = new Douban();
+        douban.init(new Context(), "https://ghproxy.com/https://raw.githubusercontent.com/zhixc/CatVodTVSpider/main/json/douban.json");
     }
 
     @Test
