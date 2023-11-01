@@ -24,8 +24,8 @@ public class TestVoflix {
     }
 
     @Test
-    public void homeVideoContent() {
-//        System.out.println(voflix.homeVideoContent());
+    public void homeVideoContent() throws Exception{
+        System.out.println(voflix.homeVideoContent());
     }
 
     @Test
