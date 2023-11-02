@@ -5,6 +5,9 @@ import android.content.Context;
 import java.util.HashMap;
 import java.util.List;
 
+
+import okhttp3.Dns;
+
 public abstract class Spider {
 
     public void init(Context context) throws Exception {
@@ -20,7 +23,7 @@ public abstract class Spider {
     /**
      * 首页数据内容
      *
-     * @param filter 不用管这个参数
+     * @param filter 暂时不用
      * @return 返回值
      */
     public String homeContent(boolean filter) throws Exception {
@@ -41,7 +44,7 @@ public abstract class Spider {
      *
      * @param tid    影片分类id值，来自 homeContent 里面的 type_id 值
      * @param pg     第几页
-     * @param filter 不用管这个参数
+     * @param filter 暂时不用
      * @param extend 用户已经选择的二级筛选数据
      * @return 返回值
      */
@@ -63,7 +66,7 @@ public abstract class Spider {
      * 搜索数据内容
      *
      * @param key   关键字/词
-     * @param quick 不要使用这个参数
+     * @param quick 暂时不用
      * @return 返回值
      */
     public String searchContent(String key, boolean quick) throws Exception {
@@ -111,4 +114,9 @@ public abstract class Spider {
     public boolean manualVideoCheck() throws Exception {
         return false;
     }
+
+    public static Dns safeDns() {
+        return Dns.SYSTEM;
+    }
+
 }
