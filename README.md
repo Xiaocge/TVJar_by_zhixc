@@ -7,16 +7,21 @@
 
 - spdier的返回值均为json字符串
 
+- 调试软件推荐Visual Studio Code
+
 - 如果是main分支的调试，需要在demo的代码中添加如下方法
+  ```java
   public static void main(String[] args) throws Exception {
-        // 在这里创建一个实例并执行测试或其他操作
         TestVoflix testVoflix = new TestVoflix();
         testVoflix.init();
         testVoflix.homeContent();
         testVoflix.homeVideoContent();
+        testVoflix.categoryContent();
+        testVoflix.detailContent();
         testVoflix.searchContent();
-        // ... 其他测试方法
-    } 
+        testVoflix.playerContent();
+    }
+  ```
 
 ## homeContent
 ```json
