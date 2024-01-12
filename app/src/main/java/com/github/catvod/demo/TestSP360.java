@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TestSP360 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         SP360 sp360 = new SP360();
         // 首页内容测试
 //        String s = sp360.homeContent(true);

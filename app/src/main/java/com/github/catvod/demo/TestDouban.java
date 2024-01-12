@@ -5,7 +5,7 @@ import com.github.catvod.spider.Douban;
 import java.util.HashMap;
 
 public class TestDouban {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Douban douban = new Douban();
         HashMap<String , String > extend = new HashMap<>();
 //        extend.put("类型", "喜剧");

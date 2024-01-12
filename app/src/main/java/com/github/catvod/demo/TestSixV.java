@@ -13,19 +13,19 @@ public class TestSixV {
     SixV sixV;
 
     @Before
-    public void init() {
+    public void init() throws Exception {
         sixV = new SixV();
         sixV.init(new Context(), "https://www.6vdy.org/");
     }
 
     @Test
-    public void homeContent() {
+    public void homeContent() throws Exception {
         // 首页测试，输出...
         System.out.println(sixV.homeContent(true));
     }
 
     @Test
-    public void categoryContent() {
+    public void categoryContent() throws Exception {
         // 分类页面数据测试
         HashMap<String, String> extend = new HashMap<>();
 //        System.out.println(sixV.categoryContent("xijupian", "1", true, extend));
@@ -33,7 +33,7 @@ public class TestSixV {
     }
 
     @Test
-    public void detailContent() {
+    public void detailContent() throws Exception {
         // 详情页面数据测试
         ArrayList<String> ids = new ArrayList<>();
 //        ids.add("/xijupian/20346.html");
@@ -43,7 +43,18 @@ public class TestSixV {
     }
 
     @Test
-    public void searchContent() {
+    public void searchContent() throws Exception {
         System.out.println(sixV.searchContent("保镖", true));
+    }
+
+    public static void main(String[] args) throws Exception {
+        TestSixV testsixV = new TestSixV();
+        testsixV.init();
+        testsixV.homeContent();
+        //testsixV.homeVideoContent();
+        testsixV.categoryContent();
+        testsixV.detailContent();
+        testsixV.searchContent();
+       // testsixV.playerContent();
     }
 }

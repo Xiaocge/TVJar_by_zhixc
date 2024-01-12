@@ -16,4 +16,8 @@ public class TextUtils {
         }
         return sb.toString();
     }
+
+    public static boolean isEmpty(String json) {
+        return false;
+    }
 }

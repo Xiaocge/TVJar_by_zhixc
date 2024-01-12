@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TestBilituys {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Bilituys bilituys = new Bilituys();
         // 首页内容测试
 //        String s = bilituys.homeContent(true);

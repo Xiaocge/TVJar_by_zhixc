@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TestVoflix {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Voflix voflix = new Voflix();
         voflix.init(new Context(), "https://www.voflix.me/");
         // 首页测试，输出...
