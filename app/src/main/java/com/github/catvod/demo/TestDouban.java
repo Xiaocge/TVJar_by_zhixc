@@ -32,4 +32,15 @@ public class TestDouban {
 //        System.out.println(douban.categoryContent("tv", "1", true, extend));
         System.out.println(douban.categoryContent("hot_gaia", "1", true, extend));
     }
+
+    public static void main(String[] args) throws Exception {
+        TestDouban Qile = new TestDouban();
+        Qile.init();
+        Qile.homeContent();
+       // Qile.homeVideoContent();
+        Qile.categoryContent();
+      // Qile.detailContent();
+      //  Qile.searchContent();
+      //  Qile.playerContent();
+    }
 }

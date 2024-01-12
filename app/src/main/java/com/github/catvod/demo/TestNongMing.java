@@ -57,4 +57,15 @@ public class TestNongMing {
         List<String> vipFlags = new ArrayList<>();
         System.out.println(nongMing.playerContent("云播①", "https://m.xiangdao.me/vod-play-id-22271-src-1-num-1.html", vipFlags));
     }
+
+    public static void main(String[] args) throws Exception {
+        TestNongMing Qile = new TestNongMing();
+        Qile.init();
+        Qile.homeContent();
+        Qile.homeVideoContent();
+        Qile.categoryContent();
+        Qile.detailContent();
+        Qile.searchContent();
+        Qile.playerContent();
+    }
 }

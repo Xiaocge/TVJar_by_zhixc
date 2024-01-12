@@ -66,4 +66,15 @@ public class TestSP360 {
     @Test
     public void playerContent() throws Exception {
     }
+
+    public static void main(String[] args) throws Exception {
+        TestSP360 Qile = new TestSP360();
+        Qile.init();
+        Qile.homeContent();
+        Qile.homeVideoContent();
+        Qile.categoryContent();
+        Qile.detailContent();
+        Qile.searchContent();
+        Qile.playerContent();
+    }
 }

@@ -53,4 +53,15 @@ public class TestXb6v {
         List<String> vipFlags = new ArrayList<>();
         System.out.println(xb6v.playerContent("磁力线路1", "magnet?xt=xxxxx", vipFlags));
     }
+
+    public static void main(String[] args) throws Exception {
+        TestXb6v Qile = new TestXb6v();
+        Qile.init();
+        Qile.homeContent();
+        Qile.homeVideoContent();
+        Qile.categoryContent();
+        Qile.detailContent();
+        Qile.searchContent();
+        Qile.playerContent();
+    }
 }

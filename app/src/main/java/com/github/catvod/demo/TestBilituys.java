@@ -60,4 +60,15 @@ public class TestBilituys {
 //        System.out.println(bilituys.playerContent("哔哩¹13", "/biliplay/53926-1-1.html", vipFlags));
         System.out.println(bilituys.playerContent("大雄13", "/biliplay/53926-2-1.html", vipFlags));
     }
+
+    public static void main(String[] args) throws Exception {
+        TestBilituys Qile = new TestBilituys();
+        Qile.init();
+        Qile.homeContent();
+        Qile.homeVideoContent();
+        Qile.categoryContent();
+        Qile.detailContent();
+        Qile.searchContent();
+        Qile.playerContent();
+    }
 }

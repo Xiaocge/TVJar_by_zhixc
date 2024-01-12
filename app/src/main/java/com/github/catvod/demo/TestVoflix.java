@@ -52,4 +52,15 @@ public class TestVoflix {
     public void playerContent() throws Exception {
         System.out.println(voflix.playerContent("", "/play/139141-2-1.html", null));
     }
+
+    public static void main(String[] args) throws Exception {
+        TestVoflix Qile = new TestVoflix();
+        Qile.init();
+        Qile.homeContent();
+        Qile.homeVideoContent();
+        Qile.categoryContent();
+        Qile.detailContent();
+        Qile.searchContent();
+        Qile.playerContent();
+    }
 }

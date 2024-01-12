@@ -49,4 +49,15 @@ public class TestSixV {
     public void searchContent() throws Exception {
         System.out.println(sixV.searchContent("保镖", true));
     }
+
+    public static void main(String[] args) throws Exception {
+        TestSixV Qile = new TestSixV();
+        Qile.init();
+        Qile.homeContent();
+      //  Qile.homeVideoContent();
+        Qile.categoryContent();
+        Qile.detailContent();
+        Qile.searchContent();
+      //  Qile.playerContent();
+    }
 }
