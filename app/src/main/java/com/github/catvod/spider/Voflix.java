@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author zhixc
- * Vodflix
+ *         Vodflix
  */
 public class Voflix extends Spider {
 
@@ -81,7 +81,7 @@ public class Voflix extends Spider {
      * @return 返回字符串
      */
     @Override
-    public String homeVideoContent() throws Exception{
+    public String homeVideoContent() throws Exception {
         String hotURL = siteURL + "/label/new.html";
         String html = OkHttp.string(hotURL, getHeader());
         Elements lis = Jsoup.parse(html)
@@ -116,7 +116,8 @@ public class Voflix extends Spider {
      * @return 返回字符串
      */
     @Override
-    public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend) throws Exception {
+    public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend)
+            throws Exception {
         // 筛选处理 start
         HashMap<String, String> ext = new HashMap<>();
         if (extend != null && extend.size() > 0) {
@@ -131,8 +132,10 @@ public class Voflix extends Spider {
 
         // 电影第二页
         // https://www.voflix.com/show/1--------2---.html
-//            String cateURL = siteUrl + String.format("/show/%s--------%s---.html", tid, pg);
-        String cateURL = siteURL + String.format("/show/%s-%s-%s-%s-----%s---%s.html", cateId, area, by, classType, pg, year);
+        // String cateURL = siteUrl + String.format("/show/%s--------%s---.html", tid,
+        // pg);
+        String cateURL = siteURL
+                + String.format("/show/%s-%s-%s-%s-----%s---%s.html", cateId, area, by, classType, pg, year);
         String html = OkHttp.string(cateURL, getHeader());
         Elements lis = Jsoup.parse(html).select(".module-items .module-item");
         JSONArray videos = new JSONArray();
@@ -171,7 +174,8 @@ public class Voflix extends Spider {
         Map<String, String> playMap = new LinkedHashMap<>();
         for (int i = 0; i < sourceList.size(); i++) {
             String spanText = circuits.get(i).select("span").text();
-            if (spanText.contains("境外") || spanText.contains("网盘")) continue;
+            if (spanText.contains("境外") || spanText.contains("网盘"))
+                continue;
             String smallText = circuits.get(i).select("small").text();
             String circuitName = spanText + "(共" + smallText + "集)";
             Elements aElements = sourceList.get(i).select("a");
@@ -225,7 +229,6 @@ public class Voflix extends Spider {
         JSONObject result = new JSONObject().put("list", new JSONArray().put(vod));
         return result.toString();
     }
-
 
     /**
      * 正则获取字符串

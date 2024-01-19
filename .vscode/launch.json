@@ -1,0 +1,63 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "TestBilituys",
+            "request": "launch",
+            "mainClass": "com.github.catvod.demo.TestBilituys",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "TestDouban",
+            "request": "launch",
+            "mainClass": "com.github.catvod.demo.TestDouban",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "TestPiaoHua",
+            "request": "launch",
+            "mainClass": "com.github.catvod.demo.TestPiaoHua",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "TestSP360",
+            "request": "launch",
+            "mainClass": "com.github.catvod.demo.TestSP360",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "TestSixV",
+            "request": "launch",
+            "mainClass": "com.github.catvod.demo.TestSixV",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "TestVoflix",
+            "request": "launch",
+            "mainClass": "com.github.catvod.demo.TestVoflix",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "TestYs21",
+            "request": "launch",
+            "mainClass": "com.github.catvod.demo.TestYs21",
+            "projectName": "app"
+        }
+    ]
+}

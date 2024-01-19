@@ -16,7 +16,7 @@ import okhttp3.Response;
 
 /**
  * @author FongMi
- * <a href="https://github.com/FongMi/CatVodSpider">CatVodSpider</a>
+ *         <a href="https://github.com/FongMi/CatVodSpider">CatVodSpider</a>
  */
 public class OkHttp {
 
@@ -40,7 +40,10 @@ public class OkHttp {
     }
 
     public static OkHttpClient.Builder getBuilder() {
-        return new OkHttpClient.Builder().dns(safeDns()).readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS).connectTimeout(30, TimeUnit.SECONDS).hostnameVerifier(SSLSocketFactoryCompat.hostnameVerifier).sslSocketFactory(new SSLSocketFactoryCompat(), SSLSocketFactoryCompat.trustAllCert);
+        return new OkHttpClient.Builder().dns(safeDns()).readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS).connectTimeout(30, TimeUnit.SECONDS)
+                .hostnameVerifier(SSLSocketFactoryCompat.hostnameVerifier)
+                .sslSocketFactory(new SSLSocketFactoryCompat(), SSLSocketFactoryCompat.trustAllCert);
     }
 
     public static OkHttpClient client() {
@@ -71,7 +74,8 @@ public class OkHttp {
         string(noRedirect(), GET, url, null, null, header, respHeader);
     }
 
-    public static String string(OkHttpClient client, String method, String url, String tag, Map<String, String> params, Map<String, String> header, Map<String, List<String>> respHeader) {
+    public static String string(OkHttpClient client, String method, String url, String tag, Map<String, String> params,
+            Map<String, String> header, Map<String, List<String>> respHeader) {
         return new OkRequest(method, url, params, header, respHeader).tag(tag).execute(client).getBody();
     }
 
@@ -87,7 +91,8 @@ public class OkHttp {
         return string(url, null, header, respHeader);
     }
 
-    public static String string(String url, Map<String, String> params, Map<String, String> header, Map<String, List<String>> respHeader) {
+    public static String string(String url, Map<String, String> params, Map<String, String> header,
+            Map<String, List<String>> respHeader) {
         return string(url, null, params, header, respHeader);
     }
 
@@ -95,7 +100,8 @@ public class OkHttp {
         return string(url, tag, null, header, null);
     }
 
-    public static String string(String url, String tag, Map<String, String> params, Map<String, String> header, Map<String, List<String>> respHeader) {
+    public static String string(String url, String tag, Map<String, String> params, Map<String, String> header,
+            Map<String, List<String>> respHeader) {
         return string(client(), GET, url, tag, params, header, respHeader);
     }
 
@@ -107,7 +113,8 @@ public class OkHttp {
         return post(url, params, header, null);
     }
 
-    public static String post(String url, Map<String, String> params, Map<String, String> header, Map<String, List<String>> respHeader) {
+    public static String post(String url, Map<String, String> params, Map<String, String> header,
+            Map<String, List<String>> respHeader) {
         return string(client(), POST, url, null, params, header, respHeader);
     }
 
@@ -133,9 +140,12 @@ public class OkHttp {
     }
 
     public static String getRedirectLocation(Map<String, List<String>> headers) {
-        if (headers == null) return null;
-        if (headers.containsKey("location")) return headers.get("location").get(0);
-        if (headers.containsKey("Location")) return headers.get("Location").get(0);
+        if (headers == null)
+            return null;
+        if (headers.containsKey("location"))
+            return headers.get("location").get(0);
+        if (headers.containsKey("Location"))
+            return headers.get("Location").get(0);
         return null;
     }
 }

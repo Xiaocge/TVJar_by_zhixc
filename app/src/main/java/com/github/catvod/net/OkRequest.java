@@ -17,7 +17,7 @@ import okhttp3.Response;
 
 /**
  * @author FongMi
- * <a href="https://github.com/FongMi/CatVodSpider">CatVodSpider</a>
+ *         <a href="https://github.com/FongMi/CatVodSpider">CatVodSpider</a>
  */
 class OkRequest {
 
@@ -30,7 +30,8 @@ class OkRequest {
     private String url;
     private Object tag;
 
-    OkRequest(String method, String url, Map<String, String> params, Map<String, String> header, Map<String, List<String>> respHeader) {
+    OkRequest(String method, String url, Map<String, String> params, Map<String, String> header,
+            Map<String, List<String>> respHeader) {
         this(method, url, null, params, header, respHeader);
     }
 
@@ -38,7 +39,8 @@ class OkRequest {
         this(method, url, json, null, header, null);
     }
 
-    private OkRequest(String method, String url, String json, Map<String, String> params, Map<String, String> header, Map<String, List<String>> respHeader) {
+    private OkRequest(String method, String url, String json, Map<String, String> params, Map<String, String> header,
+            Map<String, List<String>> respHeader) {
         this.url = url;
         this.json = json;
         this.method = method;
@@ -55,25 +57,33 @@ class OkRequest {
 
     private void getInstance() {
         Request.Builder builder = new Request.Builder();
-        if (method.equals(OkHttp.GET) && params != null) setParams();
-        if (method.equals(OkHttp.POST)) builder.post(getRequestBody());
-        if (header != null) for (String key : header.keySet()) builder.addHeader(key, header.get(key));
-        if (tag != null) builder.tag(tag);
+        if (method.equals(OkHttp.GET) && params != null)
+            setParams();
+        if (method.equals(OkHttp.POST))
+            builder.post(getRequestBody());
+        if (header != null)
+            for (String key : header.keySet())
+                builder.addHeader(key, header.get(key));
+        if (tag != null)
+            builder.tag(tag);
         request = builder.url(url).build();
     }
 
     private RequestBody getRequestBody() {
         if (!TextUtils.isEmpty(json))
-            return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+            return RequestBody.create(MediaType.get("application/x-www-form-urlencoded; charset=UTF-8"), json);
         FormBody.Builder formBody = new FormBody.Builder();
-        if (params != null) for (String key : params.keySet()) formBody.add(key, params.get(key));
+        if (params != null)
+            for (String key : params.keySet())
+                formBody.add(key, params.get(key));
         return formBody.build();
     }
 
     private void setParams() {
         url = url + "?";
-        for (String key : params.keySet()) url = url.concat(key + "=" + params.get(key) + "&");
-//        url = Utils.substring(url);
+        for (String key : params.keySet())
+            url = url.concat(key + "=" + params.get(key) + "&");
+        // url = Utils.substring(url);
         if (url != null && url.length() > 1) {
             url = url.substring(0, url.length() - 1);
         }
@@ -82,8 +92,10 @@ class OkRequest {
     public OkResult execute(OkHttpClient client) {
         try {
             Response response = client.newCall(request).execute();
-            if (respHeader != null) respHeader.clear();
-            if (respHeader != null) respHeader.putAll(response.headers().toMultimap());
+            if (respHeader != null)
+                respHeader.clear();
+            if (respHeader != null)
+                respHeader.putAll(response.headers().toMultimap());
             return new OkResult(response.code(), response.body().string());
         } catch (IOException e) {
             return new OkResult();
