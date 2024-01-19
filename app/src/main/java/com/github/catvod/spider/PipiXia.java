@@ -76,6 +76,7 @@ public class PipiXia extends Spider {
         if (requestMap.get("key") == null) {
             return Result.error("接口请求失败");
         }
+
         requestMap.put("type", type);
         requestMap.put("page", pg);
         Map<String, String> header = getHeader();
