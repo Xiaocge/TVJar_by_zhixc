@@ -9,6 +9,7 @@ import com.github.catvod.net.OkResult;
 import com.github.catvod.utils.Util;
 import com.github.catvod.utils.Utils;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.github.catvod.bean.Class;
 import com.github.catvod.bean.Vod;
 import com.github.catvod.bean.Result;
@@ -153,8 +154,45 @@ public class PipiXia extends Spider {
     @Override
     public String playerContent(String flag, String id, List<String> vipFlags) throws Exception {
         String html = OkHttp.string(id, getHeader());
-        Matcher matcher = Pattern.compile("var temCurVodFile = \"(.*?)\";").matcher(html);
-        String realUrl = matcher.find() ? matcher.group(1) : "";
+        String regex = "var player_aaaa=([^<]+)</script>";
+        Matcher matcher = Pattern.compile(regex).matcher(html);
+
+        if (!matcher.find()) {
+            return Result.error("出错, 稍后再试");
+        }
+        String group = matcher.group(1);
+        JSONObject objPlayer = new JSONObject(group);
+        String url = objPlayer.getString("url");
+        String from = objPlayer.getString("from");
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("qq", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("qiyi", "http://play.shijie.chat/player/ec.php?code=qiyi&if=1&url=");
+        hashMap.put("youku", "http://play.shijie.chat/player/ec.php?code=youku&if=1&url=");
+        hashMap.put("mgtv", "http://play.shijie.chat/player/ec.php?code=mgtv&if=1&url=");
+        hashMap.put("NBY", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("SLNB", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("FYNB", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("SPA", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("SPB", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("kyB", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("JMZN", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("ZNJSON", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("znkan", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("bilibili", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("pptv", "http://play.shijie.chat/player/?url=");
+        hashMap.put("letv", "http://play.shijie.chat/player/?url=");
+        hashMap.put("sohu", "http://play.shijie.chat/player/?url=");
+        hashMap.put("DJMP4", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("ChenXi", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("HT-", "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=");
+        hashMap.put("htys", "http://play.shijie.chat/player/?url=");
+
+        String matchUrl = hashMap.get(from);
+        if (matchUrl == null || matchUrl.isEmpty()) {
+            matchUrl = "http://play.shijie.chat/player/ec.php?code=qq&if=1&url=";
+        }
+        String realUrl = matchUrl + url;
+
         return Result.get().url(realUrl).header(getHeader()).string();
     }
 }

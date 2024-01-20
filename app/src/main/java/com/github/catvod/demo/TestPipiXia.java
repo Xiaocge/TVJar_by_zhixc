@@ -17,10 +17,10 @@ public class TestPipiXia {
                 // String s = pipiXia.homeContent(true);
                 // System.out.println(s);
 
-                ArrayList<String> ids = new ArrayList<>();
-                ids.add("http://aikun.tv/v/114393.html");
-                String detailContent = pipiXia.detailContent(ids);
-                System.out.println(detailContent);
+                // ArrayList<String> ids = new ArrayList<>();
+                // ids.add("http://aikun.tv/v/114393.html");
+                // String detailContent = pipiXia.detailContent(ids);
+                // System.out.println(detailContent);
 
                 // String playerContent = ys21.playerContent("",
                 // "/vod/player.html?cate_id=12&id=139736",
@@ -55,9 +55,9 @@ public class TestPipiXia {
                 // System.out.println(s);
 
                 // 播放内容数据测试
-                // String s = voflix.playerContent("",
-                // "https://www.voflix.me/play/1911-1-1.html", null);
-                // System.out.println(s);
+                String s = pipiXia.playerContent("",
+                                "http://aikun.tv/p/114488-1-1.html", null);
+                System.out.println(s);
 
         }
 }
