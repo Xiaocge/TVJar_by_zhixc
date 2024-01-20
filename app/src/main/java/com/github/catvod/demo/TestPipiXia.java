@@ -17,10 +17,10 @@ public class TestPipiXia {
                 // String s = pipiXia.homeContent(true);
                 // System.out.println(s);
 
-                // ArrayList<String> ids = new ArrayList<>();
-                // ids.add("/vod/detail.html?cate_id=12&id=139736&type_id=1");
-                // String detailContent = ys21.detailContent(ids);
-                // System.out.println(detailContent);
+                ArrayList<String> ids = new ArrayList<>();
+                ids.add("http://aikun.tv/v/114393.html");
+                String detailContent = pipiXia.detailContent(ids);
+                System.out.println(detailContent);
 
                 // String playerContent = ys21.playerContent("",
                 // "/vod/player.html?cate_id=12&id=139736",
@@ -30,10 +30,10 @@ public class TestPipiXia {
                 // String searchContent = ys21.searchContent("繁华", true);
                 // System.out.println(searchContent);
 
-                HashMap<String, String> map = new HashMap<>();
-                // map.put("cate_id=9&", "54");
-                String categoryContent = pipiXia.categoryContent("48", "1", true, map);
-                System.out.println(categoryContent);
+                // HashMap<String, String> map = new HashMap<>();
+                // // map.put("cate_id=9&", "54");
+                // String categoryContent = pipiXia.categoryContent("2", "1", true, map);
+                // System.out.println(categoryContent);
                 // 获取首页推荐视频测试
                 // String s = voflix.homeVideoContent();
                 // System.out.println(s);

@@ -10,9 +10,12 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Dns;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * @author FongMi
@@ -116,6 +119,26 @@ public class OkHttp {
     public static String post(String url, Map<String, String> params, Map<String, String> header,
             Map<String, List<String>> respHeader) {
         return string(client(), POST, url, null, params, header, respHeader);
+    }
+
+    public static String postFromString(String url, String params, Map<String, String> header) {
+        Request request = new Request.Builder()
+                .url(url)
+                .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=UTF-8"),
+                        params))
+                .build();
+        ;
+        String string = "";
+        try {
+            ResponseBody body = client().newCall(request).execute().body();
+            if (body != null) {
+                string = body.string();
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        return string;
     }
 
     public static OkResult postJson(String url, String json) {

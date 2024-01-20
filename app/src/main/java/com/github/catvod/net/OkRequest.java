@@ -71,7 +71,7 @@ class OkRequest {
 
     private RequestBody getRequestBody() {
         if (!TextUtils.isEmpty(json))
-            return RequestBody.create(MediaType.get("application/x-www-form-urlencoded; charset=UTF-8"), json);
+            return RequestBody.create(MediaType.get("application/x-www-form-urlencoded; charset=UTF-8"), "");
         FormBody.Builder formBody = new FormBody.Builder();
         if (params != null)
             for (String key : params.keySet())
