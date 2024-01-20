@@ -105,7 +105,7 @@ public class PipiXia extends Spider {
     public String detailContent(List<String> ids) throws Exception {
         Document doc = Jsoup.parse(OkHttp.string(ids.get(0), getHeader()));
         Elements sources = doc.select(".anthology-list-box ul");
-        Elements circuits = doc.select(".anthology-tab > .swiper-wrapper > a > i");
+        Elements circuits = doc.select(".anthology-tab > .swiper-wrapper > a");
         StringBuilder vod_play_url = new StringBuilder();
         StringBuilder vod_play_from = new StringBuilder();
         for (int i = 0; i < sources.size(); i++) {
