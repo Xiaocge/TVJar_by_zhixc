@@ -1,15 +1,11 @@
 package com.github.catvod.spider;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.github.catvod.crawler.Spider;
 import com.github.catvod.net.OkHttp;
-import com.github.catvod.net.OkResult;
 import com.github.catvod.utils.Util;
 import com.github.catvod.utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.github.catvod.bean.Class;
 import com.github.catvod.bean.Vod;
 import com.github.catvod.bean.Result;
@@ -21,15 +17,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.FileReader;
 import java.net.URLEncoder;
 import java.time.Instant;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 
 public class PipiXia extends Spider {
 
