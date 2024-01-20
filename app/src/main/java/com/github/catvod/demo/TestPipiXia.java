@@ -51,13 +51,13 @@ public class TestPipiXia {
                 // System.out.println(s);
 
                 // 搜索测试
-                // String s = pipiXia.searchContent("我", true);
-                // System.out.println(s);
+                String s = pipiXia.searchContent("三大队", true);
+                System.out.println(s);
 
                 // 播放内容数据测试
-                String s = pipiXia.playerContent("",
-                                "http://aikun.tv/p/114488-1-1.html", null);
-                System.out.println(s);
+                // String s = pipiXia.playerContent("",
+                // "http://aikun.tv/p/114488-1-1.html", null);
+                // System.out.println(s);
 
         }
 }

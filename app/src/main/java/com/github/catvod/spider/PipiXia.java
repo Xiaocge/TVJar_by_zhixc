@@ -135,17 +135,17 @@ public class PipiXia extends Spider {
 
     @Override
     public String searchContent(String key, boolean quick) throws Exception {
-        String searchURL = siteURL + "/search/index.html?keyword=" + URLEncoder.encode(key);
+        String searchURL = siteURL + "/vodsearch.html?wd=" + URLEncoder.encode(key, "utf-8");
         ;
         Document doc = Jsoup.parse(OkHttp.string(searchURL, getHeader()));
         List<Vod> list = new ArrayList<>();
-        for (Element li : doc.select(".list_item")) {
-            String vid = siteURL + li.select("strong a").attr("href");
-            String name = li.select("strong a").attr("title");
-            String pic = li.select(".figure_pic.lazy1").attr("src");
+        for (Element li : doc.select(".search-box ")) {
+            String vid = siteURL + li.select(".public-list-exp").attr("href");
+            String name = li.select(".thumb-txt").text();
+            String pic = li.select("a.public-list-exp div").attr("data-original");
             if (!pic.startsWith("http"))
                 pic = siteURL + pic;
-            String remark = li.select(".figure_info").text();
+            String remark = li.select(".public-list-prb").text();
             list.add(new Vod(vid, name, pic, remark));
         }
         return Result.string(list);
