@@ -57,6 +57,10 @@ public class Result {
         return Result.get().classes(classes).vod(list).filters(filters).string();
     }
 
+    public static String string(List<Vod> list, int pagecount) {
+        return Result.get().vod(list).pagecount(pagecount).string();
+    }
+
     public static String string(List<Class> classes, List<Vod> list, JSONObject filters) {
         return Result.get().classes(classes).vod(list).filters(filters).string();
     }
@@ -85,12 +89,13 @@ public class Result {
         return Result.get().vod(list).string();
     }
 
-    public static String string(Vod item) {
-        return Result.get().vod(item).string();
+    public Result pagecount(int pagecount) {
+        this.pagecount = pagecount;
+        return this;
     }
 
-    public static String string(List<Vod> list, int count) {
-        return Result.get().vod(list).pagecount(count).string();
+    public static String string(Vod item) {
+        return Result.get().vod(item).string();
     }
 
     public static String error(String msg) {
@@ -101,18 +106,13 @@ public class Result {
         return new Result();
     }
 
-    public Result vod(List<Vod> list) {
-        this.list = list;
-        return this;
-    }
-
     public Result classes(List<Class> classes) {
         this.classes = classes;
         return this;
     }
 
-    public Result pagecount(int count) {
-        this.pagecount = count;
+    public Result vod(List<Vod> list) {
+        this.list = list;
         return this;
     }
 
@@ -127,26 +127,21 @@ public class Result {
     }
 
     public Result filters(JSONObject object) {
-        if (object == null)
-            return this;
-        Type listType = new TypeToken<LinkedHashMap<String, List<Filter>>>() {
-        }.getType();
+        if (object == null) return this;
+        Type listType = new TypeToken<LinkedHashMap<String, List<Filter>>>() {}.getType();
         this.filters = new Gson().fromJson(object.toString(), listType);
         return this;
     }
 
     public Result filters(JsonElement element) {
-        if (element == null)
-            return this;
-        Type listType = new TypeToken<LinkedHashMap<String, List<Filter>>>() {
-        }.getType();
+        if (element == null) return this;
+        Type listType = new TypeToken<LinkedHashMap<String, List<Filter>>>() {}.getType();
         this.filters = new Gson().fromJson(element.toString(), listType);
         return this;
     }
 
     public Result header(Map<String, String> header) {
-        if (header.isEmpty())
-            return this;
+        if (header.isEmpty()) return this;
         this.header = new Gson().toJson(header);
         return this;
     }
