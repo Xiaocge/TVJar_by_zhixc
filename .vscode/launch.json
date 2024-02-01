@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TestOle",
+            "request": "launch",
+            "mainClass": "com.github.catvod.demo.TestOle",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

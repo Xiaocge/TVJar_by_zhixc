@@ -1,15 +1,16 @@
 package com.github.catvod.demo;
 
 import android.content.Context;
+
+import com.github.catvod.spider.Ole;
 import com.github.catvod.spider.Voflix;
-import com.github.catvod.spider.Ys23;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TestVoflix {
+public class TestOle {
         public static void main(String[] args) throws Exception {
-                Ys23 ys23 = new Ys23();
+                Ole ole = new Ole();
                 // Voflix voflix = new Voflix();
                 // voflix.init(new Context(), "https://www.voflix.me/");
                 // 首页测试，输出...
@@ -37,8 +38,8 @@ public class TestVoflix {
                 // System.out.println(s);
 
                 // 播放内容数据测试
-                String s = voflix.playerContent("",
-                                "https://www.voflix.me/play/1911-1-1.html", null);
+                String s = ole.playerContent("",
+                                "https://www.kanys3.com/filmplay/61390-1-1.html", null);
                 System.out.println(s);
 
         }

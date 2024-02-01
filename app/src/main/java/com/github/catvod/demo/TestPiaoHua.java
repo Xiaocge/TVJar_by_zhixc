@@ -53,12 +53,12 @@ public class TestPiaoHua {
 
     public static void main(String[] args) throws Exception {
         PiaoHua piaohua = new PiaoHua();
-        piaohua.init();
-        piaohua.homeContent();
-        piaohua.homeVideoContent();
-        piaohua.categoryContent();
-        piaohua.detailContent();
-        piaohua.searchContent();
-        piaohua.playerContent();
+//        piaohua.init();
+//        piaohua.homeContent();
+//        piaohua.homeVideoContent();
+//        piaohua.categoryContent();
+//        piaohua.detailContent();
+//        piaohua.searchContent();
+//        piaohua.playerContent();
     }
 }
