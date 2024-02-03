@@ -57,10 +57,10 @@ public class TestVidhub2 {
     public static void main(String[] args) throws Exception {
         TestVidhub2 item = new TestVidhub2();
         item.init();
-        item.homeContent();
+        // item.homeContent();
         // item.categoryContent();
         // item.detailContent();
         // Qile.searchContent();
-        // item.playerContent();
+        item.playerContent();
     }
 }

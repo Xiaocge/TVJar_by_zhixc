@@ -8,7 +8,7 @@ import com.github.catvod.bean.Result;
 import com.github.catvod.bean.Vod;
 import com.github.catvod.crawler.Spider;
 import com.github.catvod.net.OkHttp;
-import com.github.catvod.utils.Utils;
+import com.github.catvod.utils.Util;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,7 +43,7 @@ public class Vidhub2 extends Spider {
 
     private Map<String, String> getHeader() {
         Map<String, String> header = new HashMap<>();
-        header.put("User-Agent", Utils.CHROME);
+        header.put("User-Agent", Util.CHROME);
         header.put("Referer", siteURL + "/");
         return header;
     }
@@ -251,12 +251,12 @@ public class Vidhub2 extends Spider {
 
     public String getKey(String btToken) {
         String format = String.format("%s%s", btToken, "MaxwjxiifC2MWAD8");
-        String md5 = Utils.MD5(format).substring(0x6, 0x6 + 0x10);
+        String md5 = Util.MD5(format).substring(0x6, 0x6 + 0x10);
         return md5;
     }
 
     public String getIv(String xx) {
-        String md5 = Utils.MD5(xx).substring(0x3, 0x3 + 0x10);
+        String md5 = Util.MD5(xx).substring(0x3, 0x3 + 0x10);
         return md5;
     }
 }
