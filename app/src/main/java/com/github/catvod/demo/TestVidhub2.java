@@ -40,7 +40,7 @@ public class TestVidhub2 {
     public void detailContent() throws Exception {
         ArrayList<String> ids = new ArrayList<>();
         // ids.add("/detail/156852.html");
-        ids.add("/detail/162486.html");
+        ids.add("https://vidhub2.cc/voddetail/239550.html");
         System.out.println(vidhub2.detailContent(ids));
     }
 
@@ -57,10 +57,10 @@ public class TestVidhub2 {
     public static void main(String[] args) throws Exception {
         TestVidhub2 item = new TestVidhub2();
         item.init();
-        item.homeContent();
+        // item.homeContent();
         // Qile.homeVideoContent();
         // Qile.categoryContent();
-        // Qile.detailContent();
+        item.detailContent();
         // Qile.searchContent();
         // item.playerContent();
     }

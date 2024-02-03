@@ -120,47 +120,27 @@ public class Vidhub2 extends Spider {
         return "";
     }
 
-    /**
-     * 影片详情方法
-     *
-     * @param ids ids.get(0) 来源于分类方法或搜索方法的 vod_id
-     * @return 返回字符串
-     */
     @Override
     public String detailContent(List<String> ids) throws Exception {
-        String vodId = ids.get(0);
-        String detailUrl = siteURL + vodId;
-        String html = OkHttp.string(detailUrl, getHeader());
+        String html = OkHttp.string(ids.get(0), getHeader());
         Document doc = Jsoup.parse(html);
-        String name = doc.select(".module-info-heading > h1").text();
-        String pic = doc.select("[class=ls-is-cached lazy lazyload]").attr("data-original");
-        Elements elements = doc.select(".module-info-heading .module-info-tag-link");
-        String typeName = ""; // 影片类型
-        String year = ""; // 影片年代
-        String area = ""; // 地区
-        if (elements.size() >= 3) {
-            typeName = elements.get(2).select("a").text();
-            year = elements.get(0).select("a").text();
-            area = elements.get(1).select("a").text();
-        }
-        String remark = getStrByRegex("备注：(.*?)</div>", html);
-        String actor = getStrByRegex("主演：(.*?)</div>", html);
-        String director = getStrByRegex("导演：(.*?)</div>", html);
-        String description = doc.select(".module-info-introduction-content").text();
+        String name = doc.select(".page-title").text();
+        String pic = doc.select(".module-item-pic a").attr("title");
+        String year = doc.select(".video-info-item").get(2).text(); // 影片年代
+        String remark = doc.select(".video-info-item").get(4).text();
+        String actor = doc.select(".video-info-item").get(1).select("a").text();
+        String director = doc.select(".video-info-item").get(0).select("a").text();
+        String description = doc.select(".video-info-content").text().trim();
 
-        Elements sourceList = doc.select(".module-play-list");
-        Elements circuits = doc.select(".module-tab-item");
+        Elements playerList = doc.select(".scroll-box .scroll-content");
+        Elements circuits = doc.select(".module-tab-content");
         Map<String, String> playMap = new LinkedHashMap<>();
-        for (int i = 0; i < sourceList.size(); i++) {
-            String spanText = circuits.get(i).select("span").text();
-            if (spanText.contains("境外") || spanText.contains("网盘"))
-                continue;
-            String smallText = circuits.get(i).select("small").text();
-            String circuitName = spanText + "(共" + smallText + "集)";
+        for (int i = 0; i < playerList.size(); i++) {
+            String circuitName = circuits.get(i).select("span").text();
             List<String> vodItems = new ArrayList<>();
-            for (Element a : sourceList.get(i).select("a")) {
-                String episodeUrl = a.attr("href");
-                String episodeName = a.select("span").text();
+            for (Element a : playerList.get(i).select("a")) {
+                String episodeUrl = siteURL + a.attr("href");
+                String episodeName = a.attr("title");
                 vodItems.add(episodeName + "$" + episodeUrl);
             }
             if (vodItems.size() > 0)
@@ -171,9 +151,7 @@ public class Vidhub2 extends Spider {
         vod.setVodId(ids.get(0));
         vod.setVodName(name);
         vod.setVodPic(pic);
-        vod.setTypeName(typeName);
         vod.setVodYear(year);
-        vod.setVodArea(area);
         vod.setVodDirector(director);
         vod.setVodActor(actor);
         vod.setVodRemarks(remark);
