@@ -78,8 +78,14 @@ public class Vidhub2 extends Spider {
         for (int i = 0; i < typeIds.size(); i++)
             classes.add(new Class(typeIds.get(i), typeNames.get(i)));
         Document doc = Jsoup.parse(OkHttp.string(siteURL, getHeader()));
+        List<Vod> list = parseVodList(doc.select(".module-item"));
+
+        return Result.string(classes, list);
+    }
+
+    public List<Vod> parseVodList(Elements items) {
         ArrayList<Vod> list = new ArrayList<>();
-        for (Element li : doc.select(".module-items")) {
+        for (Element li : items) {
             String vid = siteURL + li.select(".module-item-titlebox >a").attr("href");
             String name = li.select(".module-item-titlebox >a").attr("title");
             String pic = li.select(".module-item-pic img").attr("data-src");
@@ -88,7 +94,7 @@ public class Vidhub2 extends Spider {
             list.add(new Vod(vid, name, pic));
         }
 
-        return Result.string(classes, list);
+        return list;
     }
 
     /**
@@ -99,25 +105,18 @@ public class Vidhub2 extends Spider {
      * @param filter 不用管这个参数
      * @param extend 用户已经选择的二级筛选数据
      * @return 返回字符串
+     *         https://vidhub2.cc/vodshow/3--------4---.html
+     *         https://vidhub2.cc/vodshow/1--------1---.html
      */
     @Override
     public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend)
             throws Exception {
-        // String cateId = extend.get("cateId") == null ? tid : extend.get("cateId");
-        // String area = extend.get("area") == null ? "" : extend.get("area");
-        // String year = extend.get("year") == null ? "" : extend.get("year");
-        // String by = extend.get("by") == null ? "" : extend.get("by");
-        // String classType = extend.get("class") == null ? "" : extend.get("class");
-        // String cateUrl = siteURL
-        // + String.format("/show/%s-%s-%s-%s-----%s---%s.html", cateId, area, by,
-        // classType, pg, year);
-        // String html = OkHttp.string(cateUrl, getHeader());
-        // Elements items = Jsoup.parse(html).select(".module-items .module-item");
-        // // List<Vod> list = parseVodList(items);
-        // int page = Integer.parseInt(pg), count = Integer.MAX_VALUE, limit = 40, total
-        // = Integer.MAX_VALUE;
-        // return Result.get().vod(list).page(page, count, limit, total).string();
-        return "";
+        String cateUrl = siteURL + String.format("/vodshow/%s--------%s---.html", tid, pg);
+        Document doc = Jsoup.parse(OkHttp.string(cateUrl, getHeader()));
+        List<Vod> list = parseVodList(doc.select(".module-item"));
+        int page = Integer.parseInt(pg), count = Integer.MAX_VALUE, limit = 40, total = Integer.MAX_VALUE;
+
+        return Result.get().vod(list).page(page, count, limit, total).string();
     }
 
     @Override
