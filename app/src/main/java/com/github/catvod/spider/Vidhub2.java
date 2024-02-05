@@ -2,6 +2,7 @@ package com.github.catvod.spider;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Base64;
 
 import com.github.catvod.bean.Class;
 import com.github.catvod.bean.Result;
@@ -18,10 +19,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -48,19 +47,10 @@ public class Vidhub2 extends Spider {
         return header;
     }
 
-    /**
-     * 爬虫代码初始化
-     *
-     * @param context 上下文对象
-     * @param extend  配置文件的 ext 参数
-     */
     @Override
     public void init(Context context, String extend) throws Exception {
-        super.init(context, extend);
-        // 域名经常性发生变化，通过外部配置文件传入，可以方便修改
-        if (extend.endsWith("/"))
-            extend = extend.substring(0, extend.lastIndexOf("/"));
-        siteURL = extend;
+        if (!extend.isEmpty())
+            siteURL = extend;
     }
 
     /**
@@ -204,19 +194,24 @@ public class Vidhub2 extends Spider {
 
     @Override
     public String playerContent(String flag, String id, List<String> vipFlags) throws Exception {
-        String playPageUrl = siteURL + id;
-        Document doc = Jsoup.parse(OkHttp.string(playPageUrl, getHeader()));
+        Document doc = Jsoup.parse(OkHttp.string(id, getHeader()));
         String playerIfUri = doc.select("#player_if").attr("src");
         String html = OkHttp.string(siteURL + playerIfUri, getHeader());
-
-        Pattern pattern = Pattern.compile("(?<=var config =)[\\s\\S]*?(?=})");
+        String regex = "(?<=var config = )[\\s\\S]*?(?=;)";
+        Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
         Matcher matcher = pattern.matcher(html);
         String url = "";
         if (!matcher.find()) {
             return "";
         }
-        JSONObject config = new JSONObject(matcher.group(0) + "}");
-        url = config.getString("url");
+        String[] lines = matcher.group(0).split("\n");
+        for (String s : lines) {
+            s = s.trim();
+            if (s.startsWith("\"url\"")) {
+                url = s.replace("\"url\":", "").replace("\"", "").replace(",", "").trim();
+                break;
+            }
+        }
 
         Pattern pattern2 = Pattern.compile("(?<=var bt_token = )[\\s\\S]*?(?=;)");
         Matcher matcher2 = pattern2.matcher(html);
@@ -234,8 +229,9 @@ public class Vidhub2 extends Spider {
     }
 
     public static String decrypt(String data, String key, String iv) throws Exception {
-        byte[] encryptedData = Base64.getDecoder().decode(data);
-        byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
+        byte[] encryptedData = Base64.decode(data, Base64.DEFAULT);
+        ;
+        byte[] keyBytes = key.getBytes("UTF-8");
         byte[] ivBytes = iv.getBytes();
 
         SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
@@ -246,7 +242,7 @@ public class Vidhub2 extends Spider {
 
         byte[] decryptedData = cipher.doFinal(encryptedData);
 
-        return new String(decryptedData, StandardCharsets.UTF_8);
+        return new String(decryptedData, "UTF-8");
     }
 
     public String getKey(String btToken) {

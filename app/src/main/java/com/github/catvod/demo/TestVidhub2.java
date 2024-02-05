@@ -51,7 +51,7 @@ public class TestVidhub2 {
 
     @Test
     public void playerContent() throws Exception {
-        System.out.println(vidhub2.playerContent("", "/vodplay/239252-1-1.html", null));
+        System.out.println(vidhub2.playerContent("", "https://vidhub2.cc/vodplay/239252-1-1.html", null));
     }
 
     public static void main(String[] args) throws Exception {
