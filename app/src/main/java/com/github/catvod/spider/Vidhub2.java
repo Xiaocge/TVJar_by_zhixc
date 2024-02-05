@@ -121,11 +121,11 @@ public class Vidhub2 extends Spider {
         String director = doc.select(".video-info-item").get(0).select("a").text();
         String description = doc.select(".video-info-content").text().trim();
 
-        Elements playerList = doc.select(".scroll-content > a");
+        Elements playerList = doc.select(".module-blocklist .scroll-content > a");
         Elements circuits = doc.select(".module-tab-content .module-tab-item");
         Map<String, String> playMap = new LinkedHashMap<>();
         for (int i = 0; i < circuits.size(); i++) {
-            String circuitName = circuits.get(i).select("span").text();
+            String circuitName = circuits.get(i).select("span").text().trim();
             List<String> vodItems = new ArrayList<>();
             for (Element a : playerList) {
                 String episodeUrl = siteURL + a.attr("href");

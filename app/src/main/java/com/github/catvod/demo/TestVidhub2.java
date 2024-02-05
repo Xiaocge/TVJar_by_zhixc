@@ -40,7 +40,7 @@ public class TestVidhub2 {
     public void detailContent() throws Exception {
         ArrayList<String> ids = new ArrayList<>();
         // ids.add("/detail/156852.html");
-        ids.add("https://vidhub2.cc/voddetail/237087.html");
+        ids.add("https://vidhub2.cc/voddetail/214120.html");
         System.out.println(vidhub2.detailContent(ids));
     }
 
