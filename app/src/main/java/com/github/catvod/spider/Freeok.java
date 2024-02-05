@@ -3,6 +3,7 @@ package com.github.catvod.spider;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Base64;
+import okhttp3.*;
 
 import com.github.catvod.bean.Class;
 import com.github.catvod.bean.Result;
@@ -18,6 +19,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,22 +31,19 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-
 /**
- * @author zhixc
+ * @author Xiaocge
  *         Vodflix
  */
-public class Vidhub2 extends Spider {
+public class Freeok extends Spider {
 
-    private String siteURL = "https://vidhub2.cc";
+    private String siteURL = "https://www.freeok.me";
 
     private Map<String, String> getHeader() {
         Map<String, String> header = new HashMap<>();
         header.put("User-Agent", Util.CHROME);
         header.put("Referer", siteURL + "/");
+
         return header;
     }
 
@@ -53,32 +53,25 @@ public class Vidhub2 extends Spider {
             siteURL = extend;
     }
 
-    /**
-     * 首页内容初始化，主要要完成分类id和值、二级筛选等，
-     * 也可以在这个方法里面完成首页推荐视频获取
-     *
-     * @param filter true: 开启二级筛选 false:关闭
-     * @return 返回字符串
-     */
     @Override
     public String homeContent(boolean filter) throws Exception {
         List<Class> classes = new ArrayList<>();
-        List<String> typeIds = Arrays.asList("1", "2", "3", "4");
-        List<String> typeNames = Arrays.asList("电影", "连续剧", "综艺", "动漫");
+        List<String> typeIds = Arrays.asList("1", "2", "3", "4", "24");
+        List<String> typeNames = Arrays.asList("电影", "电视剧", "动漫", "综艺", "解说");
         for (int i = 0; i < typeIds.size(); i++)
             classes.add(new Class(typeIds.get(i), typeNames.get(i)));
         Document doc = Jsoup.parse(OkHttp.string(siteURL, getHeader()));
-        List<Vod> list = parseVodList(doc.select(".module-item"));
+        List<Vod> list = parseVodList(doc.select(".module-items a"));
 
         return Result.string(classes, list);
     }
 
     public List<Vod> parseVodList(Elements items) {
         ArrayList<Vod> list = new ArrayList<>();
-        for (Element li : items) {
-            String vid = siteURL + li.select(".module-item-titlebox >a").attr("href");
-            String name = li.select(".module-item-titlebox >a").attr("title");
-            String pic = li.select(".module-item-pic img").attr("data-src");
+        for (Element a : items) {
+            String vid = siteURL + a.attr("href");
+            String name = a.attr("title");
+            String pic = a.select(".module-item-pic img").attr("data-original");
             if (!pic.startsWith("http"))
                 pic = siteURL + pic;
             list.add(new Vod(vid, name, pic));
@@ -194,64 +187,36 @@ public class Vidhub2 extends Spider {
 
     @Override
     public String playerContent(String flag, String id, List<String> vipFlags) throws Exception {
-        Document doc = Jsoup.parse(OkHttp.string(id, getHeader()));
-        String playerIfUri = doc.select("#player_if").attr("src");
-        String html = OkHttp.string(siteURL + playerIfUri, getHeader());
-        String regex = "(?<=var config = )[\\s\\S]*?(?=;)";
-        Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(html);
-        String url = "";
+        // Response html = getHtml();
+        String html = OkHttp.string(id, getHeader());
+        String regex = "var player_aaaa=([^<]+)</script>";
+        Matcher matcher = Pattern.compile(regex).matcher(html);
         if (!matcher.find()) {
             return "";
         }
-        String[] lines = matcher.group(0).split("\n");
-        for (String s : lines) {
-            s = s.trim();
-            if (s.startsWith("\"url\"")) {
-                url = s.replace("\"url\":", "").replace("\"", "").replace(",", "").trim();
-                break;
-            }
+        JSONObject jsonObject = new JSONObject(matcher.group(1));
+        Integer encrypt = jsonObject.getInt("encrypt");
+        String encodeUrl = jsonObject.getString("url");
+        String realUrl = "";
+        if (encrypt == 1) {
+            realUrl = URLDecoder.decode(encodeUrl);
+        } else if (encrypt == 2) {
+            byte[] decodedBytes = Base64.decode(encodeUrl, Base64.DEFAULT);
+            realUrl = URLDecoder.decode(new String(decodedBytes), "UTF-8");
         }
 
-        Pattern pattern2 = Pattern.compile("(?<=var bt_token = )[\\s\\S]*?(?=;)");
-        Matcher matcher2 = pattern2.matcher(html);
-        if (!matcher2.find()) {
-            return "";
-        }
-        String btString = matcher2.group(0);
-        String btToken = btString.substring(1, btString.length() - 1);
-        String key = getKey(btToken);
-        String iv = getIv("QGWj00YLpJaENZ6U");
-
-        String decrypt = decrypt(url, key, iv);
-
-        return Result.get().header(getHeader()).url(decrypt).string();
+        return Result.get().header(getHeader()).url(realUrl).string();
     }
 
-    public static String decrypt(String data, String key, String iv) throws Exception {
-        byte[] encryptedData = Base64.decode(data, Base64.DEFAULT);
-        byte[] keyBytes = key.getBytes("UTF-8");
-        byte[] ivBytes = iv.getBytes();
+    public Response getHtml() throws IOException {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url("https://www.freeok.me/play/124424-3-1.html")
+                .method("GET", null)
+                .build();
+        Response response = client.newCall(request).execute();
 
-        SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(ivBytes);
-
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
-
-        byte[] decryptedData = cipher.doFinal(encryptedData);
-
-        return new String(decryptedData, "UTF-8");
-    }
-
-    public String getKey(String btToken) {
-        String format = String.format("%s%s", btToken, "MaxwjxiifC2MWAD8");
-        String md5 = Util.MD5(format).substring(0x6, 0x6 + 0x10);
-        return md5;
-    }
-
-    public String getIv(String xx) {
-        String md5 = Util.MD5(xx).substring(0x3, 0x3 + 0x10);
-        return md5;
+        return response;
     }
 }
