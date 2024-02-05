@@ -33,7 +33,7 @@ public class TestFreeok {
     @Test
     public void categoryContent() throws Exception {
         HashMap<String, String> extend = new HashMap<>();
-        extend.put("area", "中国香港");
+        // extend.put("area", "中国香港");
         System.out.println(item.categoryContent("1", "1", true, extend));
     }
 
@@ -41,13 +41,13 @@ public class TestFreeok {
     public void detailContent() throws Exception {
         ArrayList<String> ids = new ArrayList<>();
         // ids.add("/detail/156852.html");
-        ids.add("https://vidhub2.cc/voddetail/214120.html");
+        ids.add("https://www.freeok.me/detail/1599.html");
         System.out.println(item.detailContent(ids));
     }
 
     @Test
     public void searchContent() throws Exception {
-        System.out.println(item.searchContent("我", true));
+        System.out.println(item.searchContent("绿夜", true));
     }
 
     @Test
@@ -58,10 +58,10 @@ public class TestFreeok {
     public static void main(String[] args) throws Exception {
         TestFreeok ok = new TestFreeok();
         ok.init();
-        ok.homeContent();
-        // item.categoryContent();
-        // item.detailContent();
-        // Qile.searchContent();
+        // ok.homeContent();
+        // ok.categoryContent();
+        // ok.detailContent();
+        ok.searchContent();
         // ok.playerContent();
     }
 }
